@@ -35,15 +35,29 @@ class WplaceTimeLapse:
                 img = Image.open(f"{self.dirname}/temp/{x}_{y}.png").convert("RGBA")
                 canvas.paste(img, ((x-self.tx1)*1000, (y-self.ty1)*1000), img)
         canvas = canvas.crop((self.px1, self.py1, (self.txl-1)*1000 + self.px2 + 1, (self.tyl-1)*1000 + self.py2 + 1))
-        canvas.save(f'{self.dirname}/{self.filename}')
+        canvas = canvas.convert("P", palette=Image.ADAPTIVE, colors=256)
+        canvas.save(f'{self.dirname}/{self.filename}', optimize=True)
         
     def delete(self):
         shutil.rmtree(f'{self.dirname}/temp')
     
     def gif(self):
         png_files = sorted([f for f in os.listdir(self.dirname) if f.endswith(".png")])
-        frames = [Image.open(os.path.join(self.dirname, f)).convert("RGBA") for f in png_files]
-        frames[0].save(f"{self.dirname}/{self.dirname}.gif", save_all=True, append_images=frames[1:], duration=100, loop=0)
+        frames = []
+        for fname in png_files:
+            im = Image.open(os.path.join(self.dirname, fname)).convert("RGBA")
+            bg = Image.new("RGBA", im.size, (0,0,0,0))
+            bg.paste(im, mask=im.split()[3])
+            im_p = bg.convert("P").quantize(colors=64, method=Image.MEDIANCUT)
+            frames.append(im_p)
+        frames[0].save(
+            f"{self.dirname}/{self.dirname}.gif",
+            save_all=True,
+            append_images=frames[1:],
+            duration=100,
+            loop=0,
+            optimize=True
+        )
 
 if __name__ == "__main__":
     targets = json.load(open('.github/workflows/targets.json', 'r'))['targets']
