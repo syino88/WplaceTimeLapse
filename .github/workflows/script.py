@@ -15,7 +15,7 @@ class WplaceTimeLapse:
         self.dirname = target['name']
         os.makedirs(self.dirname, exist_ok=True)
         os.makedirs(f'{self.dirname}/temp', exist_ok=True)
-        self.filename = f"{datetime.now().strftime('%Y%m%d %H%M%S')}.png"
+        self.filename = f"{datetime.now(timezone(timedelta(hours=9))).strftime('%Y%m%d %H%M%S')}.png"
         start = re.search(r"\(Tl X: (\d*), Tl Y: (\d*), Px X: (\d*), Px Y: (\d*)\)", target['start'])
         end = re.search(r"\(Tl X: (\d*), Tl Y: (\d*), Px X: (\d*), Px Y: (\d*)\)", target['end'])
         self.tx1, self.ty1, self.px1, self.py1 = map(int, start.groups())
