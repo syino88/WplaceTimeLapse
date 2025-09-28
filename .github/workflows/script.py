@@ -46,7 +46,7 @@ class WplaceTimeLapse:
         frames[0].save(f"{self.dirname}/{self.dirname}.gif", save_all=True, append_images=frames[1:], duration=100, loop=0)
 
 if __name__ == "__main__":
-    targets = json.load(open('targets.json', 'r'))['targets']
+    targets = json.load(open('.github/workflows/targets.json', 'r'))['targets']
     for target in targets:
         try:
             WplaceTimeLapse(target)
