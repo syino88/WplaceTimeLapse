@@ -48,7 +48,8 @@ class WplaceTimeLapse:
 if __name__ == "__main__":
     targets = json.load(open('.github/workflows/targets.json', 'r'))['targets']
     for target in targets:
-        # try:
-            WplaceTimeLapse(target)
-        # except:
-        #     pass
+        try:
+            if target:
+                WplaceTimeLapse(target)
+        except:
+            pass
