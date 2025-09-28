@@ -1,0 +1,10 @@
+{
+  "targets": [
+    {
+      "name": "SEOUL (3x3)",
+      "start": "(Tl X: 1745, Tl Y: 792, Px X: 0, Px Y: 0)",
+      "end": "(Tl X: 1747, Tl Y: 794, Px X: 999, Px Y: 999)"
+    },
+    {}
+  ]
+}
