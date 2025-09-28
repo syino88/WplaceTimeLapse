@@ -1,0 +1,30 @@
+name: WplaceTimeLapse
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  WplaceTimeLapse:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Python
+        run: |
+          pip install pillow
+          python ".github/workflows/script.py"
+
+      - name: Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add *.png animation.gif
+          git commit -m "Update images and GIF"
+          git push
