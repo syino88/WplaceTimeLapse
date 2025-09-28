@@ -43,7 +43,7 @@ class WplaceTimeLapse:
     def gif(self):
         png_files = sorted([f for f in os.listdir(self.dirname) if f.endswith(".png")])
         frames = [Image.open(os.path.join(self.dirname, f)).convert("RGBA") for f in png_files]
-        frames[0].save(f"{self.dirname}/output.gif", save_all=True, append_images=frames[1:], duration=100, loop=0)
+        frames[0].save(f"{self.dirname}/{self.dirname}.gif", save_all=True, append_images=frames[1:], duration=100, loop=0)
 
 if __name__ == "__main__":
     targets = json.load(open('targets.json', 'r'))['targets']
